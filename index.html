@@ -93,9 +93,8 @@
   var PHRASE = "Heleninha";
   var SCALES = [11, 12, 13, 14, 15, 16];
   var STEPS = 120;
-  var DRAW_SECONDS = 12; // total time to fully draw the heart
+  var DRAW_SECONDS = 12; 
 
-  // ---- build the heart-curve points (classic parametric heart) ----
   var points = [];
   SCALES.forEach(function(scale){
     for (var i = 0; i < STEPS; i++){
@@ -204,8 +203,7 @@
       start();
     }, 150);
   });
-
-  // wait for the webfont so the very first draw uses correct metrics
+  
   if (document.fonts && document.fonts.ready){
     document.fonts.load("600 16px 'Poppins'").then(start).catch(start);
   } else {
