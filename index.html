@@ -2,212 +2,313 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Heleninha ♥</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>O jardim da princesinha</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#050505;
-    --bg-2:#000000;
-    --pink:#ffb6c1;
-    --pink-soft:#ffd7dd;
-  }
-  *{box-sizing:border-box;}
-  html,body{
-    margin:0; padding:0; width:100%; height:100%;
-    overflow:hidden;
-    font-family:'Poppins', sans-serif;
-    background:var(--bg-2);
-  }
-  #stage{
-    position:fixed; inset:0;
-    display:flex; align-items:center; justify-content:center;
+    --sky-top:#241733;
+    --sky-mid:#4a3563;
+    --sky-horizon:#a878ab;
+    --soil:#332346;
+    --orchid:#7c4da8;
+    --lilac:#c6a4dd;
+    --lilac-pale:#e6d3f5;
+    --gold:#c9a24b;
+    --paper:#fbf8fd;
+    --ink:#2a1d38;
+    --serif:'Cormorant Garamond', Georgia, serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', sans-serif;
+    box-sizing:border-box;
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
-    background:radial-gradient(circle at 50% 42%, #120a0c 0%, var(--bg-1) 55%, var(--bg-2) 100%);
   }
-  canvas{
-    display:block;
-    cursor:pointer;
-    transition:transform 2.4s ease-in-out;
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    min-height:100%;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-horizon) 78%, var(--soil) 100%);
+    font-family: var(--sans);
+    color: var(--paper);
+    display:flex; flex-direction:column; align-items:center;
+    padding: 38px 16px 30px;
+    position:relative; overflow-x:hidden;
   }
-  canvas.pulse{
-    animation:beat 2.8s ease-in-out infinite;
+
+  .moon{
+    position:absolute; top:34px; right:12%; width:46px; height:46px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #fff7e6, var(--gold) 75%);
+    box-shadow: 0 0 30px 6px rgba(201,162,75,0.35);
   }
-  @keyframes beat{
-    0%,100%{ transform:scale(1); }
-    50%{ transform:scale(1.03); }
+  .stars{ position:absolute; inset:0 0 55% 0; pointer-events:none; }
+  .stars span{
+    position:absolute; width:2.5px; height:2.5px; background:#f4ecfb; border-radius:50%;
+    opacity:0.55; animation: twinkle 4s ease-in-out infinite;
   }
-  #surprise-wrap{
-    position:fixed;
-    left:0; right:0; bottom:6%;
-    display:flex; justify-content:center;
-    opacity:0;
-    transform:translateY(6px);
-    transition:opacity .9s ease, transform .9s ease;
-    pointer-events:none;
+  @keyframes twinkle{ 0%,100%{opacity:.15;} 50%{opacity:.75;} }
+
+  .firefly{
+    position:absolute; width:5px; height:5px; border-radius:50%;
+    background: radial-gradient(circle, #f3e2a8, transparent 70%);
+    box-shadow: 0 0 8px 3px rgba(243,226,168,0.55);
+    animation: drift 13s ease-in-out infinite;
   }
-  #surprise-wrap.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
-  #surprise-btn{
-    font-family:'Poppins', sans-serif;
-    font-weight:500;
-    font-size:14px;
-    letter-spacing:.5px;
-    color:var(--pink-soft);
-    background:none;
-    border:none;
-    padding:8px 4px;
-    cursor:pointer;
-    opacity:.75;
-    transition:opacity .25s ease;
+  .firefly.b{ animation-duration: 17s; animation-delay: 2s; }
+  @keyframes drift{
+    0%{ transform: translate(0,0); opacity:0.3; }
+    25%{ transform: translate(18px,-14px); opacity:0.8; }
+    50%{ transform: translate(4px,-30px); opacity:0.4; }
+    75%{ transform: translate(-16px,-10px); opacity:0.8; }
+    100%{ transform: translate(0,0); opacity:0.3; }
   }
-  #surprise-btn:hover,
-  #surprise-btn:focus-visible{
-    opacity:1;
-    text-decoration:underline;
-    text-underline-offset:4px;
+
+  .hills{ position:absolute; left:0; right:0; bottom:0; z-index:0; pointer-events:none; }
+
+  header{ text-align:center; margin-bottom:6px; max-width:340px; z-index:2; position:relative; }
+  h1{
+    font-family: var(--serif); font-style:italic; font-weight:500;
+    font-size:1.7rem; margin-bottom:8px; color:var(--paper);
   }
-  @media (prefers-reduced-motion: reduce){
-    canvas.pulse{ animation:none; }
-    canvas{ transition:none; }
+  .sub{ font-size:0.82rem; color:#dcc9ee; line-height:1.5; }
+
+  .dots{ display:flex; gap:8px; justify-content:center; margin: 18px 0 4px; z-index:2; position:relative; }
+  .dot{
+    width:9px; height:9px; border-radius:50%; border:1.4px solid var(--lilac-pale);
+    transition: background 0.4s ease, border-color 0.4s ease;
   }
+  .dot.on{ background: var(--gold); border-color: var(--gold); }
+
+  .garden{
+    position:relative; z-index:2;
+    width:100%; max-width:460px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    height: 200px; margin-top: 22px;
+  }
+
+  .plot{
+    flex:1; display:flex; justify-content:center; align-items:flex-end;
+    height:100%; cursor:pointer; position:relative;
+  }
+  .plot svg{ overflow:visible; position:relative; z-index:1; }
+
+  .plant-label{
+    position:absolute; bottom:112px; left:50%; transform:translateX(-50%);
+    width:22px; height:22px; border-radius:50%;
+    border:1.4px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--sans); font-weight:500; font-size:0.78rem;
+    color: var(--gold);
+    opacity:0.65; transition: opacity 0.4s ease;
+    animation: invite 2.6s ease-in-out infinite;
+  }
+  .plot.grown .plant-label, .plot.bloomed .plant-label{ opacity:0; animation:none; }
+  @keyframes invite{
+    0%,100%{ opacity:0.5; }
+    50%{ opacity:0.95; }
+  }
+
+  .shadow{
+    opacity:0; transition: opacity 0.6s ease 0.4s;
+  }
+  .plot.grown .shadow, .plot.bloomed .shadow{ opacity:1; }
+
+  .stem{ transform-origin: bottom center; transform: scaleY(0); transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+  .plot.grown .stem, .plot.bloomed .stem{ transform: scaleY(1); }
+
+  .leaf{ opacity:0; transition: opacity 0.5s ease 0.55s; }
+  .plot.grown .leaf, .plot.bloomed .leaf{ opacity:1; }
+
+  .bud{ transform: scale(0); transform-origin:center; transition: transform 0.5s cubic-bezier(.34,1.4,.64,1) 0.9s; }
+  .plot.grown .bud{ transform: scale(1); }
+  .plot.bloomed .bud{ transform: scale(0); }
+
+  .petals{
+    transform: scale(0) rotate(-16deg); transform-origin:center; opacity:0;
+    transition: transform 0.75s cubic-bezier(.3,1.15,.4,1) 1.25s, opacity 0.4s ease 1.25s,
+                filter 0.5s ease;
+    filter: drop-shadow(0 6px 10px rgba(59,35,80,0.35));
+  }
+  .plot.bloomed .petals{ transform: scale(1) rotate(0deg); opacity:1; }
+  .petals.glow{ filter: drop-shadow(0 0 14px rgba(230,195,255,0.9)) drop-shadow(0 6px 10px rgba(59,35,80,0.35)); }
+
+  .card{
+    z-index:2; margin-top: 24px; position:relative;
+    width:100%; max-width:400px;
+    min-height:96px;
+    background: var(--paper);
+    border: 1px solid var(--lilac);
+    border-radius: 4px 4px 26px 26px;
+    padding: 24px 28px 22px;
+    text-align:center;
+    box-shadow: 0 26px 60px -22px rgba(20,10,35,0.5);
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:22px; right:22px; height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .card-inner{ transition: opacity 0.28s ease, transform 0.28s ease; opacity:1; transform:none; }
+  .card-inner.out{ opacity:0; transform: translateY(4px); }
+  .card p{
+    font-family: var(--serif); font-style:italic; font-size:1.2rem;
+    line-height:1.6; color: var(--ink);
+  }
+  .card .placeholder{ font-family:var(--sans); font-style:normal; font-size:0.8rem; color:var(--orchid); }
+
+  .finale-mark{ display:block; margin: 6px auto 0; opacity:0.8; }
 </style>
 </head>
 <body>
-<div id="stage">
-  <canvas id="c" aria-label="Coracao feito de texto repetido"></canvas>
-</div>
-<div id="surprise-wrap">
-  <button id="surprise-btn" type="button">Aperte aqui</button>
-</div>
+
+<div class="moon" aria-hidden="true"></div>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div class="firefly" style="left:22%; top:32%;"></div>
+<div class="firefly b" style="left:68%; top:44%;"></div>
+<svg class="hills" id="hills" viewBox="0 0 480 200" preserveAspectRatio="none" width="100%" height="200" aria-hidden="true">
+  <path d="M0 90 C90 60, 160 110, 240 80 C320 55, 380 100, 480 70 L480 200 L0 200 Z" fill="#3a2a52" opacity="0.55"/>
+  <path d="M0 130 C100 100, 180 150, 260 120 C340 95, 400 140, 480 115 L480 200 L0 200 Z" fill="#2c2140" opacity="0.75"/>
+</svg>
+
+<header>
+  <h1>Um jardim só seu</h1>
+  <p class="sub">Motivos para gostar de você</p>
+</header>
+
+<div class="dots" id="dots"></div>
+
+<div class="garden" id="garden"></div>
+
+<div class="card" id="card"><div class="card-inner"><p class="placeholder">&nbsp;</p></div></div>
 
 <script>
 (function(){
-  var canvas = document.getElementById('c');
-  var ctx = canvas.getContext('2d');
-  var surpriseWrap = document.getElementById('surprise-wrap');
-  var DPR = Math.min(window.devicePixelRatio || 1, 3);
+  const reasons = [
+    "Você parece ter saído de um conto encantado, e traz o melhor com você para todos",
+    "O jeito que você cuida de quem mais precisa, com um carinho raro de se ver",
+    "O amor que você tem pelos animais, sem limite e sem esperar nada de volta",
+    "A força dos seus princípios, o motivo por trás de cada escolha que te faz ser quem é",
+    "Simplesmente, a pessoa mais incrível que eu já conheci, você é a minha princesinha..."
+  ];
 
-  var PHRASE = "Heleninha";
-  var SCALES = [11, 12, 13, 14, 15, 16];
-  var STEPS = 120;
-  var DRAW_SECONDS = 12; 
+  const garden = document.getElementById('garden');
+  const dotsWrap = document.getElementById('dots');
+  const card = document.getElementById('card');
+  const stars = document.getElementById('stars');
 
-  var points = [];
-  SCALES.forEach(function(scale){
-    for (var i = 0; i < STEPS; i++){
-      var angle = i * (Math.PI * 2) / STEPS;
-      var x = 16 * Math.pow(Math.sin(angle), 3) * scale;
-      var y = (13*Math.cos(angle) - 5*Math.cos(2*angle) - 2*Math.cos(3*angle) - Math.cos(4*angle)) * scale;
-      points.push({ x: x, y: y });
-    }
-  });
+  stars.innerHTML = Array.from({length:26}).map(() => {
+    const x = Math.random()*100, y = Math.random()*70, d = (Math.random()*3.5).toFixed(2);
+    return `<span style="left:${x}%; top:${y}%; animation-delay:${d}s"></span>`;
+  }).join('');
 
-  var bbox = (function(){
-    var minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
-    points.forEach(function(p){
-      if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
-      if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
+  dotsWrap.innerHTML = reasons.map(() => `<span class="dot"></span>`).join('');
+  const dots = dotsWrap.querySelectorAll('.dot');
+
+  function lilySVG(tint, tintDeep, deep, tilt){
+    return `
+    <svg viewBox="0 0 60 210" width="56" height="210">
+      <defs>
+        <radialGradient id="petalGrad-${deep}" cx="30%" cy="20%" r="85%">
+          <stop offset="0%" stop-color="${tint}"/>
+          <stop offset="100%" stop-color="${tintDeep}"/>
+        </radialGradient>
+        <linearGradient id="stemGrad-${deep}" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#3f5c46"/>
+          <stop offset="100%" stop-color="#5c7d63"/>
+        </linearGradient>
+      </defs>
+      <ellipse class="shadow" cx="30" cy="207" rx="16" ry="4" fill="rgba(15,8,25,0.4)"/>
+      <g transform="rotate(${tilt} 30 210)">
+        <g class="stem" stroke="url(#stemGrad-${deep})" stroke-width="4.2" fill="none" stroke-linecap="round">
+          <path d="M30 210 C28 170, 33 130, 30 76"/>
+        </g>
+        <g class="leaf" fill="#4c6d54">
+          <path d="M30 150 C8 144, 2 126, 12 114 C24 122, 29 136, 30 150Z"/>
+          <path d="M31 168 C54 160, 60 142, 50 130 C38 140, 33 154, 31 168Z"/>
+        </g>
+        <g class="bud">
+          <ellipse cx="30" cy="72" rx="6.5" ry="13" fill="${tintDeep}"/>
+        </g>
+        <g class="petals">
+          <g fill="url(#petalGrad-${deep})">
+            <path d="M30 74 C16 52, 2 54, 0 66 C12 72, 22 74, 30 74Z"/>
+            <path d="M30 74 C44 52, 58 54, 60 66 C48 72, 38 74, 30 74Z"/>
+            <path d="M30 74 C40 92, 40 106, 30 112 C20 106, 20 92, 30 74Z"/>
+            <path d="M30 74 C12 78, 4 90, 10 100 C20 96, 27 86, 30 74Z"/>
+            <path d="M30 74 C48 78, 56 90, 50 100 C40 96, 33 86, 30 74Z"/>
+            <path d="M30 74 C22 60, 24 50, 30 46 C36 50, 38 60, 30 74Z"/>
+          </g>
+          <g stroke="rgba(255,255,255,0.45)" stroke-width="0.6" fill="none" stroke-linecap="round">
+            <path d="M30 74 C22 62, 12 58, 4 62"/>
+            <path d="M30 74 C38 62, 48 58, 56 62"/>
+            <path d="M30 74 C28 86, 27 98, 30 108"/>
+            <path d="M30 74 C20 80, 13 88, 12 96"/>
+            <path d="M30 74 C40 80, 47 88, 48 96"/>
+            <path d="M30 74 C28 64, 28 54, 30 48"/>
+          </g>
+          <circle cx="30" cy="74" r="4.5" fill="var(--gold)"/>
+        </g>
+      </g>
+    </svg>`;
+  }
+
+  const palette = [
+    ['#f1def9','#c99bec','p0'],
+    ['#ecd3f6','#b57ce0','p1'],
+    ['#f4e2f9','#d1a3ec','p2'],
+    ['#e9d0f2','#a86fd6','p3'],
+    ['#f6e6fa','#c98be0','p4']
+  ];
+  const liftOffsets = [0, -10, 5, -5, 9];
+  const tilts = [-3, 2, -1.5, 3, -2];
+
+  let bloomedCount = 0;
+
+  reasons.forEach((reason, i) => {
+    const plot = document.createElement('div');
+    plot.className = 'plot';
+    plot.style.transform = `translateY(${liftOffsets[i]}px)`;
+    plot.dataset.index = i;
+    const [tint, tintDeep, key] = palette[i];
+    plot.innerHTML = `<span class="plant-label">${i + 1}</span>` + lilySVG(tint, tintDeep, key, tilts[i]);
+    garden.appendChild(plot);
+
+    plot.addEventListener('click', () => {
+      if(plot.classList.contains('bloomed')) { showReason(i); return; }
+      plot.classList.add('grown');
+      setTimeout(() => plot.classList.add('bloomed'), 950);
+      setTimeout(() => {
+        showReason(i);
+        dots[i].classList.add('on');
+        bloomedCount++;
+        if(bloomedCount === reasons.length) setTimeout(finale, 500);
+      }, 1650);
     });
-    return {minX:minX,maxX:maxX,minY:minY,maxY:maxY};
-  })();
-
-  var cssW, cssH, pixelScale, cx, cy, fontSize;
-
-  function layout(){
-    cssW = Math.min(window.innerWidth * 0.94, 900);
-    cssH = Math.min(window.innerHeight * 0.86, 900);
-    canvas.style.width = cssW + 'px';
-    canvas.style.height = cssH + 'px';
-    canvas.width = Math.round(cssW * DPR);
-    canvas.height = Math.round(cssH * DPR);
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-    var bw = bbox.maxX - bbox.minX;
-    var bh = bbox.maxY - bbox.minY;
-    var pad = 0.86;
-    pixelScale = Math.min(cssW/bw, cssH/bh) * pad;
-    cx = cssW/2 - (bbox.minX + bbox.maxX)/2 * pixelScale;
-    cy = cssH/2 + (bbox.minY + bbox.maxY)/2 * pixelScale;
-    fontSize = Math.max(7, Math.min(11, cssW/58));
-  }
-  layout();
-
-  function toCanvas(p){
-    return { x: cx + p.x*pixelScale, y: cy - p.y*pixelScale };
-  }
-
-  var pink = getComputedStyle(document.documentElement).getPropertyValue('--pink').trim();
-  var animId = null;
-  var startTime = null;
-  var drawnCount = 0;
-
-  function easeOutQuad(t){ return 1 - (1-t)*(1-t); }
-
-  function drawUpTo(count){
-    for (; drawnCount < count; drawnCount++){
-      var c = toCanvas(points[drawnCount]);
-      ctx.fillText(PHRASE, c.x, c.y);
-    }
-  }
-
-  function frame(ts){
-    if (startTime === null) startTime = ts;
-    var t = Math.min(1, (ts - startTime) / (DRAW_SECONDS * 1000));
-    var eased = easeOutQuad(t);
-    var target = Math.floor(eased * points.length);
-    drawUpTo(target);
-    if (t < 1){
-      animId = requestAnimationFrame(frame);
-    } else {
-      drawUpTo(points.length);
-      onDone();
-    }
-  }
-
-  function onDone(){
-    canvas.classList.add('pulse');
-    surpriseWrap.classList.add('show');
-  }
-
-  function start(){
-    if (animId) cancelAnimationFrame(animId);
-    canvas.classList.remove('pulse');
-    surpriseWrap.classList.remove('show');
-    ctx.clearRect(0, 0, cssW, cssH);
-    ctx.fillStyle = pink;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = "600 " + fontSize + "px 'Poppins', sans-serif";
-    ctx.shadowColor = 'rgba(255,182,193,0.55)';
-    ctx.shadowBlur = fontSize * 0.6;
-    startTime = null;
-    drawnCount = 0;
-    animId = requestAnimationFrame(frame);
-  }
-
-  canvas.addEventListener('click', start);
-
-  document.getElementById('surprise-btn').addEventListener('click', function(e){
-    e.stopPropagation();
-    window.open('https://youtu.be/umMIcZODm2k?si=ZBW_Yrdla6Jrvc4U', '_blank', 'noopener');
   });
 
-  var resizeTimer;
-  window.addEventListener('resize', function(){
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function(){
-      layout();
-      start();
-    }, 150);
-  });
-  
-  if (document.fonts && document.fonts.ready){
-    document.fonts.load("600 16px 'Poppins'").then(start).catch(start);
-  } else {
-    start();
+  function showReason(i){
+    const inner = card.querySelector('.card-inner');
+    inner.classList.add('out');
+    setTimeout(() => {
+      inner.innerHTML = `<p>${reasons[i]}</p>`;
+      inner.classList.remove('out');
+    }, 260);
+  }
+
+  function finale(){
+    document.querySelectorAll('.petals').forEach(p => p.classList.add('glow'));
+    setTimeout(() => document.querySelectorAll('.petals').forEach(p => p.classList.remove('glow')), 1400);
+
+    const inner = card.querySelector('.card-inner');
+    inner.classList.add('out');
+    setTimeout(() => {
+      inner.innerHTML = `
+        <svg class="finale-mark" width="90" height="12" viewBox="0 0 90 12">
+          <path d="M0 6 C22 -2, 30 14, 45 6 C60 -2, 68 14, 90 6" fill="none" stroke="var(--gold)" stroke-width="1"/>
+        </svg>
+        <p style="font-size:1.05rem; margin-top:10px; color:var(--orchid); font-family:var(--serif); font-style:italic;">seu jardim floresceu por inteiro 💜</p>`;
+      inner.classList.remove('out');
+    }, 260);
   }
 })();
 </script>
