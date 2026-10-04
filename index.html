@@ -413,7 +413,11 @@
       <div class="photo-slot" id="photo-slot">
         <div class="photo">
           <div class="photo-window">
-           <img src="IMG_20261001_003911_453.jpg" style="width:100%;height:100%;object-fit:cover;">
+            <img
+              id="surprise-photo"
+              style="width:100%;height:100%;object-fit:cover;"
+              alt=""
+            >
           </div>
           <p class="photo-caption">A princesinha do meu coração</p>
           <p class="photo-sign">💜</p>
@@ -435,6 +439,8 @@
   const finalWrap = document.getElementById('final-wrap');
   const btnCamera = document.getElementById('btn-camera');
   const photoSlot = document.getElementById('photo-slot');
+  const surprisePhoto = document.getElementById('surprise-photo');
+
   let openedCount = 0;
   let isAnimating = false;
 
@@ -443,15 +449,18 @@
       if(isAnimating || col.classList.contains('opened')) return;
       isAnimating = true;
 
-      col.classList.add('opened');               // lid opens
-      setTimeout(() => col.classList.add('grown'), 650);   // pause, then stem/leaf/bud grow
-      setTimeout(() => {                          // then it blooms
+      col.classList.add('opened');               
+      setTimeout(() => col.classList.add('grown'), 650);
+
+      setTimeout(() => {
         col.classList.add('bloomed');
         col.querySelector('.caption').textContent = texts[col.dataset.key];
       }, 650 + 1150);
+
       setTimeout(() => {
         openedCount++;
         isAnimating = false;
+
         if(openedCount === columns.length){
           setTimeout(() => finalWrap.classList.remove('hidden'), 400);
         }
@@ -461,8 +470,13 @@
 
   btnCamera.addEventListener('click', () => {
     btnCamera.style.display = 'none';
+
+    // A imagem só é carregada depois que ela clicar.
+    surprisePhoto.src = 'IMG_20261001_003911_453.jpg';
+
     photoSlot.classList.add('show');
   });
+
 })();
 </script>
 </body>
