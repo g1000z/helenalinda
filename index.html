@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Duas surpresas</title>
+<title>Presentes para você</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -28,22 +28,77 @@
     min-height:100%;
     background: linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
     font-family: var(--sans);
-    color: #fff;
+    color:#fff;
     display:flex; align-items:center; justify-content:center;
-    padding: 48px 22px;
+    padding: 40px 14px;
   }
 
-  .stage{ width:100%; max-width:380px; text-align:center; }
+  .stage{ width:100%; max-width:420px; text-align:center; }
 
   h1{
     font-family: var(--serif); font-style:italic; font-weight:500;
-    font-size:1.5rem; margin-bottom:10px; color:#fff;
+    font-size:1.4rem; margin-bottom:6px;
   }
-  .sub{ font-size:0.85rem; color:var(--muted); margin-bottom:36px; }
+  .sub{ font-size:0.8rem; color:var(--muted); margin-bottom:30px; }
 
-  .choices{
-    display:flex; flex-direction:column; gap:12px;
+  .row{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:6px;
   }
+  .column{
+    flex:1; display:flex; flex-direction:column; align-items:center;
+    min-width:0;
+  }
+
+  .caption{
+    font-family: var(--serif); font-style:italic; font-size:0.8rem;
+    color:#fff; line-height:1.35; margin-bottom:10px;
+    min-height:70px; display:flex; align-items:flex-end;
+    opacity:0; transition: opacity 0.5s ease 0.3s;
+  }
+  .column.bloomed .caption{ opacity:1; }
+
+  .flower-wrap{
+    width:84px; height:112px;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .flower-wrap svg{ overflow:visible; display:block; width:84px; height:auto; }
+
+  .stem{ transform-origin: bottom center; transform: scaleY(0); transition: transform 0.9s cubic-bezier(.2,.8,.2,1); }
+  .column.grown .stem{ transform: scaleY(1); }
+
+  .leaf{ opacity:0; transition: opacity 0.5s ease 0.5s; }
+  .column.grown .leaf{ opacity:1; }
+
+  .bud{ transform: scale(0); transform-origin:center; transition: transform 0.4s cubic-bezier(.34,1.4,.64,1) 0.75s; }
+  .column.grown .bud{ transform: scale(1); }
+  .column.bloomed .bud{ transform: scale(0); }
+
+  .petals{
+    transform: scale(0) rotate(-14deg); transform-origin:center; opacity:0;
+    transition: transform 0.7s cubic-bezier(.3,1.15,.4,1) 0.15s, opacity 0.4s ease 0.15s;
+    filter: drop-shadow(0 5px 6px rgba(0,0,0,0.3));
+  }
+  .column.bloomed .petals{ transform: scale(1) rotate(0deg); opacity:1; }
+
+  .box-hit{
+    cursor:pointer; padding:14px; margin:-14px -14px 2px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .column.opened .box-hit{ cursor:default; }
+  .box-wrap{ width:70px; height:auto; display:block; }
+  .lid{ transform-origin: 14px 46px; transition: transform 0.5s cubic-bezier(.3,.7,.3,1); }
+  .column.opened .lid{ transform: rotate(-120deg) translateY(-2px); }
+
+  .num{
+    width:20px; height:20px; border-radius:50%; border:1.2px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.68rem; color: var(--accent); margin-top:8px;
+  }
+
+  .final-wrap{ margin-top:34px; }
+  .final-wrap.hidden{ display:none; }
+  .final-wrap p.lead{ font-size:0.8rem; color:var(--muted); margin-bottom:14px; }
+
   .btn{
     font-family: var(--sans); font-weight:600; font-size:0.92rem;
     color: var(--ink); background: var(--accent-soft);
@@ -52,122 +107,362 @@
     width:100%;
   }
   .btn:hover{ background: var(--accent); transform: translateY(-1px); }
-  .btn:active{ transform: translateY(0); }
 
-  .hidden{ display:none !important; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
 
-  .letter{
-    margin-top:8px;
-    background: var(--card);
-    border-radius: 18px;
-    padding: 32px 26px;
+  .camera-scene{ margin-top:18px; position:relative; }
+  .camera-body{ position:relative; z-index:2; display:block; margin:0 auto; }
+
+  .photo-slot{
+    position:relative; z-index:1; margin-top:-6px;
+    overflow:hidden; height:0; transition: height 0.7s cubic-bezier(.3,.9,.3,1);
+  }
+  .photo-slot.show{ height:230px; }
+
+  .photo{
+    background: var(--card); border-radius: 4px; padding: 14px 14px 20px;
+    box-shadow: 0 16px 34px -14px rgba(0,0,0,0.5);
+    transform: translateY(-120%); transition: transform 0.7s cubic-bezier(.3,.9,.3,1);
+    max-width:220px; margin:0 auto;
+  }
+  .photo-slot.show .photo{ transform: translateY(0); }
+
+  .photo-window{
+    aspect-ratio: 4/3; border-radius: 4px;
+    background: repeating-linear-gradient(135deg, #f1e4f7, #f1e4f7 10px, #e9d6f2 10px, #e9d6f2 20px);
+    border: 1px solid #d8c4ea;
+    display:flex; align-items:center; justify-content:center;
+    color:#8a5fb0; font-size:0.74rem; font-family:var(--sans);
+    text-align:center; padding:10px;
+  }
+  .photo-caption{
+    margin-top:12px; font-family:var(--serif); font-style:italic; font-size:1.05rem; color: var(--ink);
     text-align:center;
-    box-shadow: 0 18px 40px -16px rgba(0,0,0,0.45);
-    opacity:0; transform: translateY(10px);
-    animation: rise 0.5s ease forwards;
   }
-  @keyframes rise{ to{ opacity:1; transform:none; } }
-  .letter .tag{
-    display:block;
-    font-family: var(--sans); font-weight:600; font-size:0.68rem; letter-spacing:0.08em;
-    text-transform:uppercase; color: #9a7a46; margin-bottom:14px;
-  }
-  .letter p{
-    font-family: var(--serif); font-style:italic; font-size:1.22rem;
-    line-height:1.6; color: var(--ink);
+  .photo-sign{
+    margin-top:8px; text-align:center; font-size:1rem; opacity:0;
+    animation: rise 0.6s ease 0.9s forwards;
   }
 
-  .next-wrap{ margin-top:22px; }
-  .next-wrap p{
-    font-family: var(--sans); font-size:0.8rem; color:var(--muted); margin-bottom:12px;
+  @media (max-width:360px){
+    .flower-wrap{ width:70px; height:96px; }
+    .flower-wrap svg{ width:70px; }
+    .box-wrap{ width:58px; }
+    .caption{ font-size:0.72rem; min-height:60px; }
   }
-
-  .finale{
-    margin-top:26px;
-    font-family: var(--serif); font-style:italic; font-size:1.05rem;
-    color: var(--accent-soft);
-    opacity:0; transform: translateY(8px);
-  }
-  .finale.show{ animation: rise 0.5s ease forwards; }
 </style>
 </head>
 <body>
 
 <div class="stage">
-  <h1>Duas pequenas surpresas</h1>
-  <p class="sub">escolha uma para começar</p>
+  <h1>Três presentes para você</h1>
+  <p class="sub">abra cada caixa, na ordem</p>
 
-  <div class="choices" id="choices">
-    <button class="btn" data-key="fox">A raposa</button>
-    <button class="btn" data-key="letter">A carta</button>
+  <div class="row" id="row">
+
+    <div class="column" data-key="lirio">
+      <p class="caption"></p>
+      <div class="flower-wrap">
+        <svg viewBox="0 0 110 150">
+          <defs>
+            <radialGradient id="lilyG" cx="32%" cy="25%" r="85%">
+              <stop offset="0%" stop-color="#f6e9fc"/>
+              <stop offset="100%" stop-color="#9a52c4"/>
+            </radialGradient>
+            <linearGradient id="stemG1" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#3f5c46"/>
+              <stop offset="100%" stop-color="#5c7d63"/>
+            </linearGradient>
+            <path id="lilyPetal" d="M0,0 C-11,-16 -10,-38 0,-50 C10,-38 11,-16 0,0 Z"/>
+          </defs>
+          <g class="stem" stroke="url(#stemG1)" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M55 150 C53 118, 58 82, 55 54"/>
+          </g>
+          <g class="leaf" fill="#4c6d54">
+            <path d="M55 108 C32 102, 24 86, 33 75 C45 83, 51 96, 55 108Z"/>
+            <path d="M56 122 C79 115, 86 99, 77 88 C66 97, 59 109, 56 122Z"/>
+          </g>
+          <g class="bud"><ellipse cx="55" cy="50" rx="8" ry="16" fill="#9a52c4"/></g>
+          <g class="petals">
+            <g fill="url(#lilyG)" stroke="#7c3fa0" stroke-width="0.5">
+              <use href="#lilyPetal" transform="translate(55,50) rotate(0)"/>
+              <use href="#lilyPetal" transform="translate(55,50) rotate(60)"/>
+              <use href="#lilyPetal" transform="translate(55,50) rotate(120)"/>
+              <use href="#lilyPetal" transform="translate(55,50) rotate(180)"/>
+              <use href="#lilyPetal" transform="translate(55,50) rotate(240)"/>
+              <use href="#lilyPetal" transform="translate(55,50) rotate(300)"/>
+            </g>
+            <g stroke="rgba(130,60,160,0.45)" stroke-width="0.7" fill="none">
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(0 55 50)"/>
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(60 55 50)"/>
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(120 55 50)"/>
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(180 55 50)"/>
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(240 55 50)"/>
+              <line x1="55" y1="50" x2="55" y2="6" transform="rotate(300 55 50)"/>
+            </g>
+            <g stroke="#7a4d8a" stroke-width="1.6" stroke-linecap="round">
+              <line x1="55" y1="50" x2="47" y2="22" transform="rotate(20 55 50)"/>
+              <line x1="55" y1="50" x2="47" y2="22" transform="rotate(100 55 50)"/>
+              <line x1="55" y1="50" x2="47" y2="22" transform="rotate(200 55 50)"/>
+            </g>
+            <circle cx="55" cy="50" r="4.5" fill="#c9a24b"/>
+          </g>
+        </svg>
+      </div>
+      <div class="box-hit">
+      <svg class="box-wrap" viewBox="0 0 100 96">
+        <defs>
+          <linearGradient id="boxP" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a06ad1"/>
+            <stop offset="100%" stop-color="#7c42b0"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="34" width="80" height="54" rx="5" fill="url(#boxP)"/>
+        <rect x="42" y="34" width="16" height="54" fill="#5f2e8c"/>
+        <g class="lid">
+          <rect x="6" y="18" width="88" height="18" rx="4" fill="#b580de"/>
+          <rect x="42" y="18" width="16" height="18" fill="#9460c9"/>
+          <path d="M50 18 C40 2, 26 2, 28 14 C36 18, 44 19, 50 18Z" fill="#c99bec"/>
+          <path d="M50 18 C60 2, 74 2, 72 14 C64 18, 56 19, 50 18Z" fill="#c99bec"/>
+          <circle cx="50" cy="17" r="4.5" fill="#e7cf9c"/>
+        </g>
+      </svg>
+      </div>
+      <div class="num">1</div>
+    </div>
+
+    <div class="column" data-key="girassol">
+      <p class="caption"></p>
+      <div class="flower-wrap">
+        <svg viewBox="0 0 110 150">
+          <defs>
+            <radialGradient id="sunG" cx="38%" cy="28%" r="85%">
+              <stop offset="0%" stop-color="#fde79a"/>
+              <stop offset="100%" stop-color="#e29a1f"/>
+            </radialGradient>
+            <radialGradient id="sunCenter" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#8a6236"/>
+              <stop offset="100%" stop-color="#4a2f16"/>
+            </radialGradient>
+            <linearGradient id="stemG2" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#3f5c46"/>
+              <stop offset="100%" stop-color="#5c7d63"/>
+            </linearGradient>
+            <path id="sunPetal" d="M0,0 C-7,-9 -7,-26 0,-36 C7,-26 7,-9 0,0 Z"/>
+          </defs>
+          <g class="stem" stroke="url(#stemG2)" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M55 150 C53 118, 58 82, 55 56"/>
+          </g>
+          <g class="leaf" fill="#4c6d54">
+            <path d="M55 110 C32 104, 24 88, 33 77 C45 85, 51 98, 55 110Z"/>
+            <path d="M56 124 C79 117, 86 101, 77 90 C66 99, 59 111, 56 124Z"/>
+          </g>
+          <g class="bud"><ellipse cx="55" cy="52" rx="8" ry="15" fill="#8a6236"/></g>
+          <g class="petals">
+            <g fill="url(#sunG)" stroke="#c9890f" stroke-width="0.4">
+              <use href="#sunPetal" transform="translate(55,52) rotate(0)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(26)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(52)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(78)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(104)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(130)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(156)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(182)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(208)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(234)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(260)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(286)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(312)"/>
+              <use href="#sunPetal" transform="translate(55,52) rotate(338)"/>
+            </g>
+            <circle cx="55" cy="52" r="14" fill="url(#sunCenter)"/>
+            <g fill="#2e1c0c" opacity="0.55">
+              <circle cx="50" cy="48" r="1.1"/><circle cx="56" cy="46" r="1.1"/>
+              <circle cx="60" cy="51" r="1.1"/><circle cx="58" cy="57" r="1.1"/>
+              <circle cx="52" cy="58" r="1.1"/><circle cx="48" cy="53" r="1.1"/>
+              <circle cx="55" cy="52" r="1.1"/><circle cx="61" cy="56" r="1.1"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="box-hit">
+      <svg class="box-wrap" viewBox="0 0 100 96">
+        <defs>
+          <linearGradient id="boxY" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e7af52"/>
+            <stop offset="100%" stop-color="#c98a2e"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="34" width="80" height="54" rx="5" fill="url(#boxY)"/>
+        <rect x="42" y="34" width="16" height="54" fill="#9a6a1c"/>
+        <g class="lid">
+          <rect x="6" y="18" width="88" height="18" rx="4" fill="#f0c372"/>
+          <rect x="42" y="18" width="16" height="18" fill="#d9a04a"/>
+          <path d="M50 18 C40 2, 26 2, 28 14 C36 18, 44 19, 50 18Z" fill="#f6d791"/>
+          <path d="M50 18 C60 2, 74 2, 72 14 C64 18, 56 19, 50 18Z" fill="#f6d791"/>
+          <circle cx="50" cy="17" r="4.5" fill="#7a4d1c"/>
+        </g>
+      </svg>
+      </div>
+      <div class="num">2</div>
+    </div>
+
+    <div class="column" data-key="astromelia">
+      <p class="caption"></p>
+      <div class="flower-wrap">
+        <svg viewBox="0 0 110 150">
+          <defs>
+            <radialGradient id="astroOuter" cx="32%" cy="25%" r="85%">
+              <stop offset="0%" stop-color="#ffd9bb"/>
+              <stop offset="100%" stop-color="#e07a4a"/>
+            </radialGradient>
+            <radialGradient id="astroInner" cx="32%" cy="25%" r="85%">
+              <stop offset="0%" stop-color="#ffe6d2"/>
+              <stop offset="100%" stop-color="#f0a87a"/>
+            </radialGradient>
+            <linearGradient id="stemG3" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#3f5c46"/>
+              <stop offset="100%" stop-color="#5c7d63"/>
+            </linearGradient>
+            <path id="astroOuterPetal" d="M0,0 C-10,-14 -9,-34 0,-46 C9,-34 10,-14 0,0 Z"/>
+            <path id="astroInnerPetal" d="M0,0 C-6,-12 -6,-30 0,-40 C6,-30 6,-12 0,0 Z"/>
+          </defs>
+          <g class="stem" stroke="url(#stemG3)" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M55 150 C53 118, 58 82, 55 54"/>
+          </g>
+          <g class="leaf" fill="#4c6d54">
+            <path d="M55 108 C32 102, 24 86, 33 75 C45 83, 51 96, 55 108Z"/>
+            <path d="M56 122 C79 115, 86 99, 77 88 C66 97, 59 109, 56 122Z"/>
+          </g>
+          <g class="bud"><ellipse cx="55" cy="50" rx="7" ry="15" fill="#d1683f"/></g>
+          <g class="petals">
+            <g fill="url(#astroOuter)" stroke="#c15a30" stroke-width="0.4">
+              <use href="#astroOuterPetal" transform="translate(55,50) rotate(0)"/>
+              <use href="#astroOuterPetal" transform="translate(55,50) rotate(120)"/>
+              <use href="#astroOuterPetal" transform="translate(55,50) rotate(240)"/>
+            </g>
+            <g fill="url(#astroInner)" stroke="#d17a4d" stroke-width="0.4">
+              <use href="#astroInnerPetal" transform="translate(55,50) rotate(60)"/>
+              <use href="#astroInnerPetal" transform="translate(55,50) rotate(180)"/>
+              <use href="#astroInnerPetal" transform="translate(55,50) rotate(300)"/>
+            </g>
+            <g stroke="#a8431f" stroke-width="1.2" stroke-linecap="round" opacity="0.75">
+              <line x1="0" y1="-14" x2="-2" y2="-26" transform="translate(55,50) rotate(60)"/>
+              <line x1="0" y1="-18" x2="2" y2="-30" transform="translate(55,50) rotate(60)"/>
+              <line x1="0" y1="-14" x2="-2" y2="-26" transform="translate(55,50) rotate(180)"/>
+              <line x1="0" y1="-18" x2="2" y2="-30" transform="translate(55,50) rotate(180)"/>
+            </g>
+            <circle cx="55" cy="50" r="4" fill="#c9a24b"/>
+          </g>
+        </svg>
+      </div>
+      <div class="box-hit">
+      <svg class="box-wrap" viewBox="0 0 100 96">
+        <defs>
+          <linearGradient id="boxO" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#da8463"/>
+            <stop offset="100%" stop-color="#b85838"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="34" width="80" height="54" rx="5" fill="url(#boxO)"/>
+        <rect x="42" y="34" width="16" height="54" fill="#8c3f26"/>
+        <g class="lid">
+          <rect x="6" y="18" width="88" height="18" rx="4" fill="#e8a083"/>
+          <rect x="42" y="18" width="16" height="18" fill="#c56c4a"/>
+          <path d="M50 18 C40 2, 26 2, 28 14 C36 18, 44 19, 50 18Z" fill="#f0bba5"/>
+          <path d="M50 18 C60 2, 74 2, 72 14 C64 18, 56 19, 50 18Z" fill="#f0bba5"/>
+          <circle cx="50" cy="17" r="4.5" fill="#7a3a22"/>
+        </g>
+      </svg>
+      </div>
+      <div class="num">3</div>
+    </div>
+
   </div>
 
-  <div id="message-slot"></div>
+  <div class="final-wrap hidden" id="final-wrap">
+    <p class="lead">tem mais uma coisa</p>
+    <button class="btn" id="btn-camera">tirar a foto</button>
 
-  <div class="next-wrap hidden" id="next-wrap">
-    <p>ir para outra surpresa</p>
-    <button class="btn" id="btn-next"></button>
+    <div class="camera-scene">
+      <svg class="camera-body" width="180" height="120" viewBox="0 0 180 120">
+        <defs>
+          <linearGradient id="camBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a4a78"/>
+            <stop offset="100%" stop-color="#3f3360"/>
+          </linearGradient>
+          <radialGradient id="lensGlass" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#cdeaff"/>
+            <stop offset="60%" stop-color="#4a7ab0"/>
+            <stop offset="100%" stop-color="#1c2e44"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="90" cy="112" rx="78" ry="6" fill="#000" opacity="0.25"/>
+        <rect x="8" y="30" width="164" height="78" rx="12" fill="url(#camBody)"/>
+        <rect x="52" y="10" width="40" height="22" rx="4" fill="#3f3360"/>
+        <rect x="18" y="38" width="30" height="14" rx="3" fill="#2c2448"/>
+        <circle cx="128" cy="40" r="9" fill="none" stroke="#f0e6d8" stroke-width="1.4" opacity="0.7"/>
+        <circle cx="128" cy="40" r="6" fill="#f0e6d8"/>
+        <circle cx="90" cy="70" r="34" fill="#2c2448"/>
+        <circle cx="90" cy="70" r="27" fill="url(#lensGlass)"/>
+        <circle cx="90" cy="70" r="27" fill="none" stroke="#1c1638" stroke-width="2"/>
+        <circle cx="80" cy="60" r="6" fill="#fff" opacity="0.5"/>
+        <circle cx="98" cy="78" r="2.5" fill="#fff" opacity="0.3"/>
+      </svg>
+
+      <div class="photo-slot" id="photo-slot">
+        <div class="photo">
+          <div class="photo-window">
+            <!-- Troque este bloco por <img src="sua-foto.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+            coloque aqui a foto dela
+          </div>
+          <p class="photo-caption">A princesinha do meu coração</p>
+          <p class="photo-sign">💜</p>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <p class="finale" id="finale">isso é só uma pequena parte do quanto eu gosto de você</p>
-  <a class="btn hidden" id="btn-video" href="https://youtu.be/ElYqfOSUm7s?t=80&si=ilU8TkyTfo-Bmc4N" target="_blank" rel="noopener" style="display:block; text-decoration:none; margin-top:16px;">mais uma coisa</a>
 </div>
 
 <script>
 (function(){
-  const messages = {
-    fox: {
-      label: "o pequeno príncipe",
-      buttonLabel: "A raposa",
-      text: "Cativar não é prender, é construir um laço que mais ninguém tem com aquela pessoa"
-    },
-    letter: {
-      label: "diário de uma paixão",
-      buttonLabel: "A carta",
-      text: "Amor de verdade não é um momento, é a soma de todos os dias em que se escolhe continuar"
-    }
+  const texts = {
+    lirio: "Obrigado por ser alguém que me trouxe a felicidade.",
+    girassol: "Obrigado por existir, e ser quem você é, o meu docinho.",
+    astromelia: "Obrigado por cada dia, meu amor."
   };
 
-  const choices = document.getElementById('choices');
-  const messageSlot = document.getElementById('message-slot');
-  const nextWrap = document.getElementById('next-wrap');
-  const btnNext = document.getElementById('btn-next');
-  const finale = document.getElementById('finale');
-
+  const columns = document.querySelectorAll('.column');
+  const finalWrap = document.getElementById('final-wrap');
+  const btnCamera = document.getElementById('btn-camera');
+  const photoSlot = document.getElementById('photo-slot');
   let openedCount = 0;
+  let isAnimating = false;
 
-  function renderMessage(key){
-    const m = messages[key];
-    messageSlot.innerHTML = `
-      <div class="letter">
-        <span class="tag">${m.label}</span>
-        <p>${m.text}</p>
-      </div>`;
-  }
+  columns.forEach(col => {
+    col.querySelector('.box-hit').addEventListener('click', () => {
+      if(isAnimating || col.classList.contains('opened')) return;
+      isAnimating = true;
 
-  function openMessage(key){
-    openedCount++;
-    choices.classList.add('hidden');
-    nextWrap.classList.add('hidden');
-    renderMessage(key);
-
-    if(openedCount === 1){
-      const otherKey = key === 'fox' ? 'letter' : 'fox';
+      col.classList.add('opened');               // lid opens
+      setTimeout(() => col.classList.add('grown'), 650);   // pause, then stem/leaf/bud grow
+      setTimeout(() => {                          // then it blooms
+        col.classList.add('bloomed');
+        col.querySelector('.caption').textContent = texts[col.dataset.key];
+      }, 650 + 1150);
       setTimeout(() => {
-        btnNext.textContent = messages[otherKey].buttonLabel;
-        btnNext.onclick = () => openMessage(otherKey);
-        nextWrap.classList.remove('hidden');
-      }, 600);
-    } else {
-      setTimeout(() => {
-        finale.classList.add('show');
-        document.getElementById('btn-video').classList.remove('hidden');
-      }, 600);
-    }
-  }
+        openedCount++;
+        isAnimating = false;
+        if(openedCount === columns.length){
+          setTimeout(() => finalWrap.classList.remove('hidden'), 400);
+        }
+      }, 650 + 1150 + 900);
+    });
+  });
 
-  choices.querySelectorAll('.btn').forEach(b => {
-    b.addEventListener('click', () => openMessage(b.dataset.key));
+  btnCamera.addEventListener('click', () => {
+    btnCamera.style.display = 'none';
+    photoSlot.classList.add('show');
   });
 })();
 </script>
