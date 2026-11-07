@@ -1,215 +1,177 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Eu te amo</title>
-<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<title>O casal do ano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  color-scheme: light;
-  --bg:#fde7ee; --bg2:#fff4f7; --ink:#4a1230; --muted:#8a5a74; --accent:#c2185b; --soft:#f6c6d6;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --bg:#2b0d1d; --bg2:#45142e; --ink:#ffe6ee; --muted:#d9a9bf; --accent:#ff8fb1; --soft:#5a2342;
+  :root{
+    --night:#0e1a33; --night-2:#1b2c52; --glow:#f3b6a8; --rose:#e8887a;
+    --cream:#fff6ec; --gold:#f2d7a0; --ink:#2a1d38; --muted:#b9c4de;
+    --card:#fffdfb;
+    --serif:'Playfair Display', Georgia, serif;
+    --sans:'DM Sans', -apple-system, 'Segoe UI', sans-serif;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
   }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --bg:#2b0d1d; --bg2:#45142e; --ink:#ffe6ee; --muted:#d9a9bf; --accent:#ff8fb1; --soft:#5a2342;
-}
-*,*::before,*::after{box-sizing:inherit}
-html,body{height:100%}
-body{margin:0;background:radial-gradient(circle at 50% 35%,var(--bg2),var(--bg) 75%) fixed;color:var(--ink);font-family:"Figtree",system-ui,sans-serif;line-height:1.5;overflow-x:hidden}
-.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-.hearts span{position:absolute;bottom:-10%;color:var(--accent);opacity:0;animation:rise linear infinite}
-@keyframes rise{0%{transform:translateY(0);opacity:0}15%{opacity:.28}85%{opacity:.2}100%{transform:translateY(-115vh);opacity:0}}
-.stage{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:28px;padding:32px 22px}
-.phrase{font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:clamp(2.4rem,12vw,5.6rem);line-height:1.08;margin:0;color:var(--accent);overflow-wrap:anywhere;max-width:100%;transition:opacity .2s ease}
-.lang{margin:0;font-size:1.15rem;min-height:3.2em;transition:opacity .2s ease}
-.lang strong{font-weight:600}
-.lang span{display:block;color:var(--muted)}
-.out{opacity:0}
-.quote{margin:0;max-width:34ch;font-family:"Young Serif",Georgia,serif;font-size:1.15rem;line-height:1.4}
-.quote footer{font-family:"Figtree",system-ui,sans-serif;color:var(--muted);font-size:.9rem;margin-top:6px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.btn{font:inherit;font-weight:600;cursor:pointer;text-decoration:none;border:2px solid var(--accent);background:var(--accent);color:var(--bg);padding:10px 22px;border-radius:999px}
-.btn.ghost{background:transparent;color:var(--accent)}
-.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){.hearts{display:none}.phrase,.lang{transition:none}}
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    min-height:100%;
+    background:
+      radial-gradient(1.2px 1.2px at 12% 18%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 8%, #fff 50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 46% 22%, #ffe9d6 50%, transparent 51%),
+      radial-gradient(1px 1px at 63% 10%, #fff 50%, transparent 51%),
+      radial-gradient(1.3px 1.3px at 80% 20%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 91% 7%, #ffe9d6 50%, transparent 51%),
+      radial-gradient(1px 1px at 8% 44%, #fff 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 94% 46%, #fff 50%, transparent 51%),
+      radial-gradient(ellipse 80% 45% at 50% 100%, rgba(232,136,122,0.35), transparent 70%),
+      linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+    background-attachment: fixed;
+    font-family: var(--sans); color: var(--cream);
+    display:flex; align-items:center; justify-content:center;
+    padding: 40px 14px;
+  }
+  .stage{ width:100%; max-width:420px; text-align:center; }
+
+  h1{
+    font-family: var(--serif); font-style:italic; font-weight:500;
+    font-size:1.55rem; line-height:1.25; margin-bottom:10px; color: var(--cream);
+  }
+  .sub{ font-size:0.85rem; color:var(--muted); margin-bottom:24px; }
+
+  .btn{
+    font-family: var(--sans); font-weight:600; font-size:0.95rem;
+    color:#fff; background: linear-gradient(135deg, #f0a090, var(--rose));
+    border:none; padding:15px 24px; border-radius:999px; cursor:pointer; width:100%;
+    box-shadow: 0 10px 24px -10px rgba(232,136,122,0.8);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px -10px rgba(232,136,122,0.9); }
+
+  .camera-scene{ margin-top:22px; position:relative; }
+  .camera-body{ position:relative; z-index:2; display:block; margin:0 auto; filter: drop-shadow(0 14px 18px rgba(0,0,0,0.45)); }
+
+  .flash{ position:fixed; inset:0; background:#fff7ea; opacity:0; pointer-events:none; z-index:10; }
+  .flash.go{ animation: flash 0.6s ease-out; }
+  @keyframes flash{ 0%{opacity:0.95;} 100%{opacity:0;} }
+
+  .photo-slot{
+    position:relative; z-index:1; margin-top:-6px;
+    overflow:hidden; max-height:0; transition: max-height 0.9s cubic-bezier(.3,.9,.3,1);
+  }
+  .photo-slot.show{ max-height:420px; }
+
+  .pair{ display:flex; gap:10px; justify-content:center; padding:14px 2px 6px; }
+
+  .photo{
+    flex:1; min-width:0; background: var(--card); border-radius:4px; padding:9px 9px 14px;
+    box-shadow: 0 16px 34px -14px rgba(0,0,0,0.5);
+    transform: translateY(-130%) rotate(0deg); opacity:0;
+    transition: transform 0.8s cubic-bezier(.3,.9,.3,1), opacity 0.3s ease;
+  }
+  .photo-slot.show .photo{ opacity:1; }
+  .photo-slot.show .photo.a{ transform: translateY(0) rotate(-3deg); transition-delay:0.1s; }
+  .photo-slot.show .photo.b{ transform: translateY(0) rotate(3deg);  transition-delay:0.55s; }
+
+  .photo-window{
+    aspect-ratio: 3/4; border-radius:3px; overflow:hidden;
+    background: repeating-linear-gradient(135deg, #f1e4f7, #f1e4f7 10px, #e9d6f2 10px, #e9d6f2 20px);
+    border: 1px solid #d8c4ea;
+  }
+  .photo-window img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .photo-caption{
+    margin-top:10px; font-family:'Cormorant Garamond', Georgia, serif; font-style:italic;
+    font-size:0.98rem; line-height:1.2; color: var(--ink); text-align:center;
+  }
+
+  .verdict{
+    margin-top:20px; font-family: var(--serif); font-style:italic; font-size:1.2rem;
+    color: var(--gold);
+    opacity:0; transition: opacity 0.8s ease 1.6s;
+  }
+  .photo-slot.show ~ .verdict{ opacity:1; }
 </style>
 </head>
 <body>
-<div class="hearts" id="hearts" aria-hidden="true"></div>
-<main class="stage">
-  <section>
-    <h1 class="phrase" id="phrase" lang="pt">Eu te amo</h1>
-    <p class="lang" id="lang"><strong>Português</strong></p>
-  </section>
-  <blockquote class="quote">
-    <p>Isso é para te lembrar do quanto eu amo você, minha princesinha, você é o meu mundo.</p>
-  </blockquote>
-  <div class="actions">
-    <button class="btn ghost" id="pause">Parar</button>
+
+<div class="stage">
+  <h1>Entre tantas pessoas no mundo, eu encontrei você</h1>
+  <p class="sub">toque no botão e veja o resultado</p>
+
+  <button class="btn" id="btn-camera">revelar o casal mais feliz do ano</button>
+
+  <div class="camera-scene">
+    <svg class="camera-body" width="200" height="130" viewBox="0 0 200 130">
+      <defs>
+        <linearGradient id="camBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fff6ec"/><stop offset="100%" stop-color="#ecd5bf"/>
+        </linearGradient>
+        <linearGradient id="camBand" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#e8887a"/><stop offset="100%" stop-color="#f3b6a8"/>
+        </linearGradient>
+        <radialGradient id="lensGlass" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#ffe9d6"/><stop offset="45%" stop-color="#6c7fb0"/><stop offset="100%" stop-color="#121b36"/>
+        </radialGradient>
+      </defs>
+      <rect x="8" y="34" width="184" height="86" rx="16" fill="url(#camBody)"/>
+      <rect x="8" y="34" width="184" height="22" rx="16" fill="url(#camBand)"/>
+      <rect x="8" y="46" width="184" height="10" fill="url(#camBand)"/>
+      <rect x="22" y="62" width="34" height="18" rx="4" fill="#fff" stroke="#e3c9ae" stroke-width="1.5"/>
+      <rect x="26" y="66" width="26" height="10" rx="2" fill="#fff0c4"/>
+      <circle cx="166" cy="72" r="10" fill="#e8887a"/>
+      <circle cx="166" cy="72" r="6.5" fill="#f3b6a8"/>
+      <circle cx="104" cy="82" r="36" fill="#3a3350"/>
+      <circle cx="104" cy="82" r="31" fill="#f2d7a0"/>
+      <circle cx="104" cy="82" r="26" fill="url(#lensGlass)"/>
+      <circle cx="94" cy="72" r="6" fill="#fff" opacity="0.55"/>
+      <circle cx="113" cy="91" r="2.5" fill="#fff" opacity="0.35"/>
+      <rect x="64" y="104" width="80" height="6" rx="3" fill="#2a1d38" opacity="0.18"/>
+    </svg>
+
+    <div class="photo-slot" id="photo-slot">
+      <div class="pair">
+        <div class="photo a">
+          <div class="photo-window"><img id="foto1" alt=""></div>
+          <p class="photo-caption">Heleninha do princesinho</p>
+        </div>
+        <div class="photo b">
+          <div class="photo-window"><img id="foto2" alt=""></div>
+          <p class="photo-caption">Princesinho da Heleninha</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="verdict">o casal mais feliz do ano 💜</p>
   </div>
-</main>
+</div>
+
+<div class="flash" id="flash"></div>
 
 <script>
-// [idioma, frase, pronúncia (ou ""), código]
-const L=[
-["Português","Eu te amo","","pt-BR"],
-["Inglês","I love you","","en-US"],
-["Espanhol","Te quiero","","es-ES"],
-["Francês","Je t’aime","","fr-FR"],
-["Italiano","Ti amo","","it-IT"],
-["Alemão","Ich liebe dich","","de-DE"],
-["Japonês","愛してる","Aishiteru","ja-JP"],
-["Coreano","사랑해","Saranghae","ko-KR"],
-["Chinês (mandarim)","我爱你","Wǒ ài nǐ","zh-CN"],
-["Russo","Я тебя люблю","Ya tebyá lyublyú","ru-RU"],
-["Árabe","أحبك","Uhibbuk","ar-SA"],
-["Hindi","मुझे तुमसे प्यार है","Mujhe tumse pyaar hai","hi-IN"],
-["Turco","Seni seviyorum","","tr-TR"],
-["Grego","Σ’αγαπώ","S’agapó","el-GR"],
-["Holandês","Ik hou van je","","nl-NL"],
-["Sueco","Jag älskar dig","","sv-SE"],
-["Norueguês","Jeg elsker deg","","nb-NO"],
-["Dinamarquês","Jeg elsker dig","","da-DK"],
-["Finlandês","Minä rakastan sinua","","fi-FI"],
-["Islandês","Ég elska þig","","is-IS"],
-["Polonês","Kocham cię","","pl-PL"],
-["Tcheco","Miluji tě","","cs-CZ"],
-["Húngaro","Szeretlek","","hu-HU"],
-["Romeno","Te iubesc","","ro-RO"],
-["Catalão","T’estimo","","ca-ES"],
-["Latim","Te amo","","la"],
-["Esperanto","Mi amas vin","","eo"],
-["Irlandês","Tá grá agam duit","","ga-IE"],
-["Tailandês","ฉันรักเธอ","Chan rák ter","th-TH"],
-["Vietnamita","Anh yêu em","Para dizer a ele: Em yêu anh","vi-VN"],
-["Indonésio","Aku cinta kamu","","id-ID"],
-["Tagalo","Mahal kita","","fil-PH"],
-["Havaiano","Aloha au iā ʻoe","","haw"],
-["Suaíli","Nakupenda","","sw-KE"],
-["Zulu","Ngiyakuthanda","","zu-ZA"],
-["Iorubá","Mo nífẹ̀ẹ́ rẹ","","yo-NG"],
-["Persa","دوستت دارم","Dustat dâram","fa-IR"],
-["Urdu","مجھے تم سے محبت ہے","Mujhe tum se mohabbat hai","ur-PK"],
-["Bengali","আমি তোমাকে ভালোবাসি","Ami tomake bhalobashi","bn-BD"],
-["Tâmil","நான் உன்னை காதலிக்கிறேன்","Naan unnai kaadhalikkiren","ta-IN"],
-["Telugo","నేను నిన్ను ప్రేమిస్తున్నాను","Nenu ninnu premistunnanu","te-IN"],
-["Marata","माझं तुझ्यावर प्रेम आहे","Majha tujhyavar prem aahe","mr-IN"],
-["Guzerate","હું તને પ્રેમ કરું છું","Hu tane prem karu chu","gu-IN"],
-["Punjabi","ਮੈਨੂੰ ਤੇਰੇ ਨਾਲ ਪਿਆਰ ਹੈ","Mainu tere naal pyaar hai","pa-IN"],
-["Malaiala","ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു","Njan ninne snehikkunnu","ml-IN"],
-["Canarês","ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ","Naanu ninnannu preetisuttene","kn-IN"],
-["Nepalês","म तिमीलाई माया गर्छु","Ma timilai maya garchhu","ne-NP"],
-["Cingalês","මම ඔබට ආදරෙයි","Mama obata adarei","si-LK"],
-["Birmanês","ငါ မင်းကို ချစ်တယ်","Nga min ko chit tal","my-MM"],
-["Khmer","ខ្ញុំស្រលាញ់អ្នក","Khnhom srolanh neak","km-KH"],
-["Laosiano","ຂ້ອຍຮັກເຈົ້າ","Khoi hak chao","lo-LA"],
-["Mongol","Би чамд хайртай","Bi chamd khairtai","mn-MN"],
-["Malaio","Saya cinta padamu","","ms-MY"],
-["Hebraico","אני אוהב אותך","Ani ohev otakh (para ela dizer: ohevet)","he-IL"],
-["Georgiano","მიყვარხარ","Miqvarkhar","ka-GE"],
-["Armênio","Ես քեզ սիրում եմ","Yes kez sirum em","hy-AM"],
-["Azeri","Mən səni sevirəm","","az-AZ"],
-["Cazaque","Мен сені сүйемін","Men seni süyemin","kk-KZ"],
-["Uzbeque","Men seni sevaman","","uz-UZ"],
-["Ucraniano","Я тебе кохаю","Ya tebe kokhayu","uk-UA"],
-["Bielorrusso","Я цябе кахаю","Ya tsyabe kakhayu","be-BY"],
-["Búlgaro","Обичам те","Obicham te","bg-BG"],
-["Sérvio","Волим те","Volim te","sr-RS"],
-["Esloveno","Ljubim te","","sl-SI"],
-["Eslovaco","Ľúbim ťa","","sk-SK"],
-["Macedônio","Те сакам","Te sakam","mk-MK"],
-["Albanês","Të dua","","sq-AL"],
-["Lituano","Aš tave myliu","","lt-LT"],
-["Letão","Es tevi mīlu","","lv-LV"],
-["Estoniano","Ma armastan sind","","et-EE"],
-["Maltês","Inħobbok","","mt-MT"],
-["Basco","Maite zaitut","","eu-ES"],
-["Galego","Quérote","","gl-ES"],
-["Galês","Rwy’n dy garu di","","cy-GB"],
-["Gaélico escocês","Tha gaol agam ort","","gd-GB"],
-["Bretão","Da garout a ran","","br-FR"],
-["Corso","Ti tengu caru","","co"],
-["Luxemburguês","Ech hunn dech gär","","lb-LU"],
-["Frísio","Ik hâld fan dy","","fy-NL"],
-["Africâner","Ek is lief vir jou","","af-ZA"],
-["Feroês","Eg elski teg","","fo-FO"],
-["Iídiche","איך האב דיך ליב","Ikh hob dikh lib","yi"],
-["Somali","Waan ku jeclahay","","so-SO"],
-["Hauçá","Ina son ka","Para ela: Ina son ki","ha-NG"],
-["Igbo","M hụrụ gị n’anya","","ig-NG"],
-["Xhosa","Ndiyakuthanda","","xh-ZA"],
-["Shona","Ndinokuda","","sn-ZW"],
-["Malgaxe","Tiako ianao","","mg-MG"],
-["Quiniaruanda","Ndagukunda","","rw-RW"],
-["Lingala","Nalingi yo","","ln-CD"],
-["Uolofe","Dama la bëgg","","wo-SN"],
-["Maori","Kei te aroha au ki a koe","","mi-NZ"],
-["Samoano","Ou te alofa ia te oe","","sm-WS"],
-["Taitiano","Ua here vau ia oe","","ty-PF"],
-["Tonganês","ʻOku ou ʻofa ʻiate koe","","to-TO"],
-["Fijiano","Au domoni iko","","fj-FJ"],
-["Javanês","Aku tresno karo kowe","","jv-ID"],
-["Sundanês","Abdi bogoh ka anjeun","","su-ID"],
-["Cebuano","Gihigugma tika","","ceb-PH"],
-["Quíchua","Munakuyki","","qu-PE"],
-["Guarani","Rohayhu","","gn-PY"],
-["Náuatle","Nimitztlazohtla","","nah-MX"],
-["Crioulo haitiano","Mwen renmen w","","ht-HT"],
-["Pachto","زه تا سره مینه کوم","Zə tā sara mina kawum","ps-AF"],
-["Curdo","Ez ji te hez dikim","","ku-TR"],
-["Tadjique","Ман туро дӯст медорам","Man turo dūst medoram","tg-TJ"],
-["Turcomeno","Men seni söýýärin","","tk-TM"],
-["Quirguiz","Мен сени сүйөм","Men seni süyöm","ky-KG"],
-["Tártaro","Мин сине яратам","Min sine yaratam","tt-RU"],
-["Sânscrito","अहं त्वां प्रेम करोमि","Ahaṃ tvāṃ prema karomi","sa-IN"]
-];
-const first=["Português","Alemão","Inglês"];
-const seen=new Set();
-const D=[...first.map(n=>L.find(r=>r[0]===n)),...L.filter(r=>!first.includes(r[0]))]
-  .filter(r=>{const k=r[1].toLowerCase();if(seen.has(k))return false;seen.add(k);return true});
+(function(){
+  const btn = document.getElementById('btn-camera');
+  const slot = document.getElementById('photo-slot');
+  const flash = document.getElementById('flash');
 
-const $=id=>document.getElementById(id);
-const phrase=$("phrase"),lang=$("lang"),pauseBtn=$("pause");
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-let cur=0,timer=null,paused=false;
-const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+  btn.addEventListener('click', () => {
+    btn.style.display = 'none';
+    flash.classList.add('go');
 
-function show(i){
-  cur=i;
-  const [name,txt,pron,code]=D[i];
-  phrase.classList.add("out");lang.classList.add("out");
-  setTimeout(()=>{
-    phrase.textContent=txt;
-    phrase.lang=code.split("-")[0];
-    phrase.dir=/^(ar|fa|ur|he|yi|ps)/.test(code)?"rtl":"auto";
-    lang.innerHTML="<strong>"+esc(name)+"</strong>"+(pron?"<span>"+esc(pron)+"</span>":"");
-    phrase.classList.remove("out");lang.classList.remove("out");
-  },reduce?0:200);
-}
-function start(){clearInterval(timer);if(!paused)timer=setInterval(()=>show((cur+1)%D.length),2000)}
-pauseBtn.addEventListener("click",()=>{paused=!paused;pauseBtn.textContent=paused?"Continuar":"Parar";start()});
+    // Troque pelos nomes das suas fotos. Elas só carregam depois do clique.
+    document.getElementById('foto1').src = 'foto-dela.jpg';
+    document.getElementById('foto2').src = 'foto-dele.jpg';
 
-const hs=$("hearts");
-for(let i=0;i<16;i++){
-  const s=document.createElement("span");
-  s.textContent="♥";
-  s.style.left=(Math.random()*100)+"%";
-  s.style.fontSize=(14+Math.random()*26)+"px";
-  s.style.animationDuration=(9+Math.random()*9)+"s";
-  s.style.animationDelay=(-Math.random()*14)+"s";
-  hs.appendChild(s);
-}
-start();
+    setTimeout(() => slot.classList.add('show'), 250);
+  });
+})();
 </script>
 </body>
 </html>
